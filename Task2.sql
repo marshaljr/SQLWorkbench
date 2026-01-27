@@ -1,4 +1,4 @@
-#1.	Create a database named dbemp and switch to it.
+#1
 show databases;
 create database dbemp1;
 use dbemp1;
@@ -16,7 +16,7 @@ create table employee(
         JoinedDate DATE,
         Salary decimal(10,0)
 );
-#3.	Insert at least two employee records into the employee table.
+#3.
 insert into employee (
 EmployeeID,FirstName,LastName,Gender,DateofBirth,Designation,
 DepartmentName,ManagerId,JoinedDate,Salary)
