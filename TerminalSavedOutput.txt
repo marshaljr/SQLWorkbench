@@ -1,0 +1,135 @@
+marshal@MacBook-Air ~ % mongosh "mongodb+srv://cluster10.z1rf6kt.mongodb.net/" --apiVersion 1 --username marshalRam
+Enter password: *********
+Current Mongosh Log ID:	69c1f79df10628e346cdbe14
+Connecting to:		mongodb+srv://<credentials>@cluster10.z1rf6kt.mongodb.net/?appName=mongosh+2.8.1
+MongoServerError: bad auth : authentication failed
+marshal@MacBook-Air ~ % mongosh "mongodb+srv://cluster10.z1rf6kt.mongodb.net/" --apiVersion 1 --username marshalRam
+Enter password: ***********
+Current Mongosh Log ID:	69c1f7d585d81215d4f38491
+Connecting to:		mongodb+srv://<credentials>@cluster10.z1rf6kt.mongodb.net/?appName=mongosh+2.8.1
+Using MongoDB:		8.0.20 (API Version 1)
+Using Mongosh:		2.8.1
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+Atlas atlas-ovbwha-shard-0 [primary] test> show dbs
+sample_mflix  204.56 MiB
+test           72.00 KiB
+admin         360.00 KiB
+local          31.37 GiB
+Atlas atlas-ovbwha-shard-0 [primary] test> db.students.insertMany([{ name: "Ram", age: 20, course: "BCA" }, { name: "Shyam", age: 17, course: "BBA" }, { name: "Sita", age: 19, course: "BSc" }, { name: "Gita", age: 18, course: "BA" }, { name: "Hari", age: 22, course: "BCom" }]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('69c1fa2685d81215d4f38492'),
+    '1': ObjectId('69c1fa2685d81215d4f38493'),
+    '2': ObjectId('69c1fa2685d81215d4f38494'),
+    '3': ObjectId('69c1fa2685d81215d4f38495'),
+    '4': ObjectId('69c1fa2685d81215d4f38496')
+  }
+}
+Atlas atlas-ovbwha-shard-0 [primary] test> db.students.find().pretty();
+[
+  {
+    _id: ObjectId('69c1fa2685d81215d4f38492'),
+    name: 'Ram',
+    age: 20,
+    course: 'BCA'
+  },
+  {
+    _id: ObjectId('69c1fa2685d81215d4f38493'),
+    name: 'Shyam',
+    age: 17,
+    course: 'BBA'
+  },
+  {
+    _id: ObjectId('69c1fa2685d81215d4f38494'),
+    name: 'Sita',
+    age: 19,
+    course: 'BSc'
+  },
+  {
+    _id: ObjectId('69c1fa2685d81215d4f38495'),
+    name: 'Gita',
+    age: 18,
+    course: 'BA'
+  },
+  {
+    _id: ObjectId('69c1fa2685d81215d4f38496'),
+    name: 'Hari',
+    age: 22,
+    course: 'BCom'
+  }
+]
+Atlas atlas-ovbwha-shard-0 [primary] test> db.students.find({ age: { $gt: 18 } }).pretty();
+[
+  {
+    _id: ObjectId('69c1fa2685d81215d4f38492'),
+    name: 'Ram',
+    age: 20,
+    course: 'BCA'
+  },
+  {
+    _id: ObjectId('69c1fa2685d81215d4f38494'),
+    name: 'Sita',
+    age: 19,
+    course: 'BSc'
+  },
+  {
+    _id: ObjectId('69c1fa2685d81215d4f38496'),
+    name: 'Hari',
+    age: 22,
+    course: 'BCom'
+  }
+]
+Atlas atlas-ovbwha-shard-0 [primary] test> db.students.updateOne({ name: "Shyam" }, { $set: { age: 18 } });
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Atlas atlas-ovbwha-shard-0 [primary] test> db.students.updateMany({ age: { $lt: 20 } }, { $set: { grade: "C" } });
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 3,
+  modifiedCount: 3,
+  upsertedCount: 0
+}
+Atlas atlas-ovbwha-shard-0 [primary] test> db.students.find({ grade: "C" }).pretty();
+[
+  {
+    _id: ObjectId('69c1fa2685d81215d4f38493'),
+    name: 'Shyam',
+    age: 18,
+    course: 'BBA',
+    grade: 'C'
+  },
+  {
+    _id: ObjectId('69c1fa2685d81215d4f38494'),
+    name: 'Sita',
+    age: 19,
+    course: 'BSc',
+    grade: 'C'
+  },
+  {
+    _id: ObjectId('69c1fa2685d81215d4f38495'),
+    name: 'Gita',
+    age: 18,
+    course: 'BA',
+    grade: 'C'
+  }
+]
+Atlas atlas-ovbwha-shard-0 [primary] test> db.students.deleteOne({ name: "Gita" });
+{ acknowledged: true, deletedCount: 1 }
+Atlas atlas-ovbwha-shard-0 [primary] test> db.students.deleteMany({ grade: "C" });
+{ acknowledged: true, deletedCount: 2 }
+Atlas atlas-ovbwha-shard-0 [primary] test> db.students.countDocuments();
+2
+Atlas atlas-ovbwha-shard-0 [primary] test> db.students.countDocuments({ grade: "A" });
+0
+Atlas atlas-ovbwha-shard-0 [primary] test> db.students.deleteMany({age:{$gte:18,$lte:21}})
+{ acknowledged: true, deletedCount: 1 }
+Atlas atlas-ovbwha-shard-0 [primary] test> 
